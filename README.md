@@ -1,4 +1,4 @@
-# Introduction-to-MongoDB
+# ![Logo](docs/leaf.svg) Introduction-to-MongoDB
 
 ## What is MongoDB ?
 
