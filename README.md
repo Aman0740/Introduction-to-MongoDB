@@ -1,4 +1,4 @@
-# ![Logo](docs/leaf.svg) Introduction-to-MongoDB
+# ![Logo]([docs/leaf.svg](https://cdn.icon-icons.com/icons2/2699/PNG/512/mongodb_logo_icon_170943.png)) Introduction-to-MongoDB
 
 ## What is MongoDB ?
 
