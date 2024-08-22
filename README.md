@@ -173,31 +173,149 @@ Using `try/catch`, you can catch these errors and handle them appropriately, whe
 
 ## Setting up Directory Structure of Express MVC Setup Express Routers ?
 
-### Directory Structure
+Setting up a directory structure for an Express application using the MVC (Model-View-Controller) pattern involves organizing your code into separate folders for models, views, and controllers, along with other supporting directories like routes, config, and public. Here's how you can set it up:
 
-1. **Root Directory**: This is the main folder of your project. Inside it, you typically have:
-   - **`app.js` or `server.js`**: The entry point of your application where Express is initialized.
-   - **`package.json`**: Contains project metadata and dependencies.
+### 1. Directory Structure
 
-2. **`/controllers`**: This folder contains your controller files. Controllers handle the logic for each route and interact with models to retrieve data.
+A typical Express MVC directory structure might look like this:
 
-3. **`/models`**: This folder contains your model files. Models define the structure of your data, typically interacting with a database.
+```
+my-express-app/
+├── config/
+│   └── config.js
+├── controllers/
+│   └── userController.js
+├── models/
+│   └── userModel.js
+├── routes/
+│   └── userRoutes.js
+├── views/
+│   ├── layout.ejs
+│   └── user.ejs
+├── public/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── script.js
+├── node_modules/
+├── app.js
+├── package.json
+└── .env
+```
 
-4. **`/routes`**: This folder contains your router files. Routers define the application's endpoints and connect them to the appropriate controller methods.
+### 2. Explanation of Each Directory and File
 
-5. **`/views`**: (Optional) This folder contains your view templates if you're using a templating engine like EJS, Pug, etc., to render HTML pages.
+- **config/**: Contains configuration files, like database connection settings.
+- **controllers/**: Contains the logic that interacts with the models and prepares data to be sent to the views.
+- **models/**: Represents the data structure (e.g., using Mongoose for MongoDB).
+- **routes/**: Contains route definitions, which map URLs to specific controller actions.
+- **views/**: Contains the templates for the user interface, often using a templating engine like EJS, Pug, or Handlebars.
+- **public/**: Contains static files like CSS, JavaScript, images, etc.
+- **app.js**: The main entry point for the application. It sets up middleware, routes, and starts the server.
+- **package.json**: Contains project metadata, dependencies, and scripts.
+- **.env**: Stores environment variables like database URIs or API keys.
 
-6. **`/public`**: This folder contains static assets like CSS, JavaScript files, and images.
+### 3. Setting Up Express Routers
 
-7. **`/config`**: (Optional) This folder contains configuration files like database setup, environment variables, etc.
+Let's set up a basic Express Router for a user management system.
 
-### Setting Up Express Routers
+**app.js**:
+```javascript
+const express = require('express');
+const app = express();
+const userRoutes = require('./routes/userRoutes');
 
-- **Routers**: Express routers help you manage different parts of your application by grouping related routes together. Each router handles a specific part of your app's functionality.
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-- **Separation of Concerns**: In the `/routes` directory, you create separate files for different routes (e.g., `userRoutes.js`, `productRoutes.js`). These routers are then imported into your main application file (`app.js` or `server.js`).
+// Routes
+app.use('/users', userRoutes);
 
-- **Modularization**: By using routers, you modularize your application, making it easier to manage and scale. Each router can be associated with a specific controller, and this structure keeps your code clean and organized.
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+```
+
+**routes/userRoutes.js**:
+```javascript
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/userController');
+
+// Define routes and map them to controller methods
+router.get('/', userController.getAllUsers);
+router.post('/', userController.createUser);
+router.get('/:id', userController.getUserById);
+router.put('/:id', userController.updateUser);
+router.delete('/:id', userController.deleteUser);
+
+module.exports = router;
+```
+
+**controllers/userController.js**:
+```javascript
+const User = require('../models/userModel');
+
+exports.getAllUsers = (req, res) => {
+    // Logic to get all users
+    res.send('Get all users');
+};
+
+exports.createUser = (req, res) => {
+    // Logic to create a new user
+    res.send('Create a user');
+};
+
+exports.getUserById = (req, res) => {
+    const { id } = req.params;
+    // Logic to get a user by ID
+    res.send(`Get user with ID ${id}`);
+};
+
+exports.updateUser = (req, res) => {
+    const { id } = req.params;
+    // Logic to update a user by ID
+    res.send(`Update user with ID ${id}`);
+};
+
+exports.deleteUser = (req, res) => {
+    const { id } = req.params;
+    // Logic to delete a user by ID
+    res.send(`Delete user with ID ${id}`);
+};
+```
+
+**models/userModel.js**:
+```javascript
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    password: String,
+});
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
+```
+
+### 4. Running the Project
+
+1. **Install Dependencies**:
+   ```bash
+   npm install express mongoose dotenv
+   ```
+
+2. **Start the Server**:
+   ```bash
+   node app.js
+   ```
+
+This setup provides a basic structure to start building your Express application using the MVC pattern.
 
 ## Middleware concept in MVC make static files assests attach internal and external filels ?
 
@@ -232,3 +350,392 @@ MongoDB and MySQL are both popular databases but differ significantly in their s
 4. **Use Cases**:
    - **MongoDB**: Ideal for applications that require flexible, evolving data structures, such as real-time analytics, content management, and IoT.
    - **MySQL**: Best suited for applications that require complex transactions and data integrity, such as e-commerce platforms, financial systems, and legacy applications.
+  
+## What is SQL and NoSQL in MongoDB ?
+
+SQL and NoSQL are two types of database management systems, each with its own approach to handling and storing data. Here's a brief overview of both:
+
+### SQL (Structured Query Language)
+
+- **Relational Database**: SQL databases are relational, meaning they store data in structured tables with rows and columns. They use schemas to define the structure of data and relationships between tables.
+- **Examples**: MySQL, PostgreSQL, Oracle Database, Microsoft SQL Server.
+- **Query Language**: SQL databases use Structured Query Language (SQL) for querying and managing data.
+- **ACID Compliance**: SQL databases are typically ACID-compliant, ensuring transactions are processed reliably.
+
+### NoSQL (Not Only SQL)
+
+- **Non-relational Database**: NoSQL databases are non-relational and can store data in various formats such as documents, key-value pairs, wide-columns, or graphs.
+- **Examples**: MongoDB, Cassandra, Redis, Couchbase.
+- **Flexible Schema**: NoSQL databases often have a more flexible schema or schema-less design, allowing for more dynamic and scalable data structures.
+- **MongoDB**: MongoDB is a popular NoSQL database that stores data in a flexible, JSON-like format called BSON (Binary JSON). It is designed to handle large volumes of unstructured or semi-structured data and provides scalability and high performance.
+
+### MongoDB Specifics
+
+- **Document-Oriented**: MongoDB stores data in collections of JSON-like documents. Each document can have a different structure, making it easy to store and query diverse types of data.
+- **Query Language**: MongoDB uses a query language that is similar to JSON syntax for querying and manipulating data.
+- **Scalability**: MongoDB is designed to scale horizontally, making it suitable for handling large amounts of data and high-throughput applications.
+
+## What is DBMS in MongoDB ?
+
+DBMS stands for Database Management System, which is software designed to manage, store, and retrieve data in a database. MongoDB is a type of NoSQL DBMS, and it handles data differently compared to traditional relational databases.
+
+### MongoDB as a DBMS
+
+1. **Document-Oriented**: MongoDB is a document-oriented database, which means it stores data in JSON-like documents (using BSON format) rather than in tables with rows and columns. Each document can have a unique structure, allowing for flexibility in how data is stored and queried.
+
+2. **Schema Flexibility**: Unlike relational databases, MongoDB does not require a fixed schema. This means you can have documents with varying structures within the same collection, making it adaptable to changes and new data types.
+
+3. **Scalability**: MongoDB is designed to scale horizontally, which means it can handle large volumes of data and high traffic by distributing the load across multiple servers.
+
+4. **High Performance**: MongoDB provides high performance for read and write operations through features like indexing, in-memory processing, and optimized query execution.
+
+5. **Rich Query Language**: MongoDB uses a powerful query language that supports a wide range of operations, including searching, filtering, and aggregation, all using a syntax similar to JSON.
+
+6. **Replication and Sharding**: MongoDB supports data replication through replica sets, which ensure data redundancy and high availability. It also supports sharding, a method of distributing data across multiple servers to balance the load and enhance performance.
+
+7. **Integration and Tools**: MongoDB provides various tools and integrations for data management, including MongoDB Atlas (a cloud-based managed service), Compass (a graphical user interface), and drivers for different programming languages.
+
+## Queries and Params in MongoDB ?
+
+In MongoDB, queries and parameters are used to retrieve and manipulate data stored in the database. Here's a breakdown of how they work:
+
+### Queries in MongoDB
+
+MongoDB queries are used to search for and retrieve documents from a collection. The query language is designed to be similar to JSON, making it intuitive for developers familiar with JSON data.
+
+#### Basic Query Syntax
+
+- **Find Documents**: To retrieve documents from a collection, you use the `find()` method. For example:
+  ```javascript
+  db.collection.find({ key: value });
+  ```
+  This query returns all documents where the `key` field matches `value`.
+
+- **Query Operators**: MongoDB supports various query operators for more complex queries:
+  - **Comparison Operators**: Such as `$eq` (equals), `$ne` (not equal), `$gt` (greater than), `$lt` (less than), etc.
+    ```javascript
+    db.collection.find({ age: { $gt: 25 } });
+    ```
+  - **Logical Operators**: Such as `$and`, `$or`, `$not`, `$nor` to combine multiple conditions.
+    ```javascript
+    db.collection.find({ $or: [ { age: { $lt: 20 } }, { age: { $gt: 60 } } ] });
+    ```
+  - **Element Operators**: Such as `$exists` (checks if a field exists) and `$type` (checks the type of a field).
+    ```javascript
+    db.collection.find({ name: { $exists: true } });
+    ```
+
+#### Projection
+
+Projection specifies which fields to include or exclude in the returned documents. For example:
+```javascript
+db.collection.find({ key: value }, { field1: 1, field2: 1 });
+```
+This query returns only `field1` and `field2` from the matching documents, while excluding other fields.
+
+### Parameters in MongoDB
+
+Parameters in MongoDB are used to customize queries and operations. Here are some common parameters:
+
+#### `find()` Method Parameters
+
+- **Query Parameter**: The first parameter of `find()` is the query document that specifies the criteria for selecting documents.
+- **Projection Parameter**: The second parameter of `find()` specifies which fields to include or exclude.
+
+#### `findOne()` Method
+
+The `findOne()` method retrieves a single document that matches the query criteria:
+```javascript
+db.collection.findOne({ key: value });
+```
+
+#### `update()` and `updateOne()` Methods
+
+- **Update Parameter**: Specifies the update operations to be applied to the matching documents.
+  ```javascript
+  db.collection.updateOne(
+    { key: value }, 
+    { $set: { field: newValue } }
+  );
+  ```
+
+#### `aggregate()` Method
+
+The `aggregate()` method allows for complex data processing and transformations:
+```javascript
+db.collection.aggregate([
+  { $match: { key: value } },
+  { $group: { _id: "$field", total: { $sum: "$value" } } }
+]);
+```
+
+#### `sort()`, `limit()`, and `skip()`
+
+- **Sort**: To sort the results, use the `sort()` method.
+  ```javascript
+  db.collection.find().sort({ field: 1 }); // 1 for ascending, -1 for descending
+  ```
+
+- **Limit**: To limit the number of results, use the `limit()` method.
+  ```javascript
+  db.collection.find().limit(5);
+  ```
+
+- **Skip**: To skip a number of results, use the `skip()` method.
+  ```javascript
+  db.collection.find().skip(10);
+  ```
+
+## What is the difference between Mongoose and MongoDB ?
+
+Mongoose and MongoDB serve different purposes in the context of working with MongoDB databases. Here's a breakdown of their differences:
+
+### MongoDB
+
+1. **Database System**: MongoDB is a NoSQL database system that stores data in a flexible, JSON-like format called BSON (Binary JSON). It is used for managing and querying large volumes of unstructured or semi-structured data.
+
+2. **Core Functions**: MongoDB provides the fundamental database functionalities, such as:
+   - Storing, retrieving, and manipulating data.
+   - Managing data collections and documents.
+   - Performing queries and indexing for efficient data access.
+
+3. **Usage**: MongoDB is used directly to interact with your data, handle storage, and manage database operations.
+
+### Mongoose
+
+1. **Object Data Modeling (ODM) Library**: Mongoose is an ODM library for MongoDB and Node.js. It provides a higher-level abstraction for interacting with MongoDB, allowing you to define schemas and models for your data.
+
+2. **Core Features**:
+   - **Schema Definition**: Mongoose allows you to define schemas that specify the structure of your data, including validation rules, default values, and data types.
+   - **Models**: You can create models based on schemas, which act as constructors for creating and managing documents.
+   - **Middleware**: Mongoose supports middleware functions (hooks) that can be used to perform actions before or after certain operations, such as saving or validating documents.
+   - **Query Building**: Mongoose provides a more structured and fluent API for building and executing queries compared to the native MongoDB query language.
+
+3. **Usage**: Mongoose is used as an intermediary between your Node.js application and MongoDB. It simplifies the process of working with MongoDB by providing an object-oriented interface and additional features that streamline data management.
+
+### Example Comparison
+
+- **MongoDB Native Query**:
+  ```javascript
+  db.collection.find({ key: value });
+  ```
+
+- **Mongoose Query**:
+  ```javascript
+  Model.find({ key: value }, function(err, documents) {
+    // handle result
+  });
+  ```
+
+- **Schema Definition with Mongoose**:
+  ```javascript
+  const mongoose = require('mongoose');
+  const Schema = mongoose.Schema;
+
+  const userSchema = new Schema({
+    name: String,
+    age: Number
+  });
+
+  const User = mongoose.model('User', userSchema);
+  ```
+
+## Q-1 Consider you are working in amazon one day your manager asked you to build a feature that can actually see the activity of the whole day that at vwhat API endpoint requests has been made along with the timestamp of request then how are you going to implement it ?
+
+To build a feature that tracks API endpoint requests along with their timestamps, we can create a Node.js project using Express.js. Here's a step-by-step guide to implementing this feature:
+
+### Project Setup
+
+1. **Initialize the Project:**
+   ```bash
+   mkdir api-tracking
+   cd api-tracking
+   npm init -y
+   ```
+
+2. **Install Dependencies:**
+   ```bash
+   npm install express mongoose dotenv
+   npm install --save-dev nodemon
+   ```
+
+   - `express`: To create the server and define the endpoints.
+   - `mongoose`: To interact with a MongoDB database where we'll store the logs.
+   - `dotenv`: To manage environment variables.
+   - `nodemon`: For auto-restarting the server during development.
+
+3. **Project Structure:**
+   ```
+   api-tracking/
+   ├── server.js
+   ├── .env
+   ├── models/
+   │   └── RequestLog.js
+   ├── routes/
+   │   └── api.js
+   └── middleware/
+       └── logger.js
+   ```
+
+### Implementation
+
+#### 1. **Environment Configuration (.env):**
+
+   Create a `.env` file to store environment variables like the MongoDB connection string.
+
+   ```env
+   PORT=3000
+   MONGO_URI=mongodb://localhost:27017/apiTrackingDB
+   ```
+
+#### 2. **Setting Up the Server (server.js):**
+
+   Create the server and connect to MongoDB.
+
+   ```javascript
+   const express = require('express');
+   const mongoose = require('mongoose');
+   const dotenv = require('dotenv');
+   const apiRoutes = require('./routes/api');
+
+   dotenv.config();
+
+   const app = express();
+   const PORT = process.env.PORT || 3000;
+
+   // MongoDB connection
+   mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+     .then(() => console.log('MongoDB connected'))
+     .catch(err => console.error(err));
+
+   // Middleware
+   app.use(express.json());
+
+   // Routes
+   app.use('/api', apiRoutes);
+
+   // Start the server
+   app.listen(PORT, () => {
+     console.log(`Server running on port ${PORT}`);
+   });
+   ```
+
+#### 3. **Request Logging Middleware (middleware/logger.js):**
+
+   Create middleware to log each request.
+
+   ```javascript
+   const RequestLog = require('../models/RequestLog');
+
+   const logger = async (req, res, next) => {
+     const log = new RequestLog({
+       method: req.method,
+       endpoint: req.originalUrl,
+       timestamp: new Date(),
+     });
+
+     try {
+       await log.save();
+       console.log('Request logged:', log);
+     } catch (error) {
+       console.error('Error logging request:', error);
+     }
+
+     next();
+   };
+
+   module.exports = logger;
+   ```
+
+#### 4. **Request Log Model (models/RequestLog.js):**
+
+   Define a Mongoose schema and model to store the request logs.
+
+   ```javascript
+   const mongoose = require('mongoose');
+
+   const requestLogSchema = new mongoose.Schema({
+     method: { type: String, required: true },
+     endpoint: { type: String, required: true },
+     timestamp: { type: Date, required: true },
+   });
+
+   const RequestLog = mongoose.model('RequestLog', requestLogSchema);
+
+   module.exports = RequestLog;
+   ```
+
+#### 5. **API Routes (routes/api.js):**
+
+   Create some dummy endpoints to demonstrate logging.
+
+   ```javascript
+   const express = require('express');
+   const router = express.Router();
+   const logger = require('../middleware/logger');
+   const RequestLog = require('../models/RequestLog');
+
+   // Apply logger middleware to all routes
+   router.use(logger);
+
+   // Dummy endpoints
+   router.get('/test', (req, res) => {
+     res.send('GET request to /test');
+   });
+
+   router.post('/test', (req, res) => {
+     res.send('POST request to /test');
+   });
+
+   // Endpoint to retrieve all logs
+   router.get('/logs', async (req, res) => {
+     try {
+       const logs = await RequestLog.find().sort({ timestamp: -1 });
+       res.json(logs);
+     } catch (error) {
+       res.status(500).json({ message: 'Error retrieving logs', error });
+     }
+   });
+
+   module.exports = router;
+   ```
+
+### Running the Project
+
+1. **Start the Server:**
+   ```bash
+   nodemon server.js
+   ```
+
+2. **Test the API Endpoints:**
+
+   - **GET** `/api/test` - This will trigger a GET request and log it.
+   - **POST** `/api/test` - This will trigger a POST request and log it.
+   - **GET** `/api/logs` - This will return all logged requests.
+
+### Viewing the Logs
+
+To see all the logged API requests with their timestamps, you can make a GET request to the `/api/logs` endpoint.
+
+### Conclusion
+
+This setup provides a basic implementation of an API request tracking system using Node.js, Express.js, and MongoDB. You can expand on this by adding features such as filtering logs by date, logging response status, etc.
+
+
+## Explanation
+
+To implement a feature that tracks daily API endpoint requests along with timestamps, you can follow these steps:
+
+1. **Logging Middleware**: Implement a logging middleware that intercepts all incoming API requests. This middleware would log details like the endpoint URL, HTTP method, request payload (if any), and timestamp.
+
+2. **Centralized Logging System**: Store these logs in a centralized logging system such as AWS CloudWatch, Elasticsearch, or any database designed for logging, where each entry includes the endpoint, timestamp, and other relevant metadata.
+
+3. **Data Aggregation**: Use a data aggregation tool or script that can periodically (e.g., hourly or daily) query the log storage to summarize the data, such as the number of requests per endpoint and their timestamps.
+
+4. **Dashboard**: Build a dashboard (using tools like Grafana or Kibana) that visualizes the data. This dashboard should allow you to filter by date, endpoint, and time range to see the activity.
+
+5. **API for Reports**: Optionally, create an API endpoint that can provide a summary report of the logged data for a particular day, showing the count and details of requests made to each endpoint.
+
+
+
+  
