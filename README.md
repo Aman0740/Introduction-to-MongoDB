@@ -1,10 +1,10 @@
 # Introduction-to-MongoDB
 
-## What is MongoDB ?
+## Q-1 What is MongoDB ?
 
 MongoDB is a popular NoSQL database that stores data in a flexible, JSON-like format called BSON (Binary JSON). Unlike traditional relational databases, MongoDB is schema-less, meaning it doesn't require a fixed structure for data, allowing for easier scalability and faster development. It's widely used for handling large volumes of unstructured data and is known for its performance, flexibility, and scalability in handling modern web applications.
 
-## How to use MongoDB and Why we use it ?
+## Q-2 How to use MongoDB and Why we use it ?
 
 **How to use MongoDB:**
 
@@ -30,7 +30,7 @@ MongoDB is a popular NoSQL database that stores data in a flexible, JSON-like fo
 - **Ease of Use**: JSON-like format is intuitive and easy to work with, especially in modern web applications.
 - **Rich Query Language**: Supports complex queries and aggregations, making it versatile for various use cases.
 
-## What are the benefits of it ?
+## Q-3 What are the benefits of it ?
 
 MongoDB offers several benefits:
 
@@ -48,7 +48,7 @@ MongoDB offers several benefits:
 
 7. **Ease of Integration**: Works well with modern technologies and frameworks, and has a variety of official drivers and community-supported libraries for different programming languages.
 
-## What is MongoDB used for ?
+ ## Q-4 What is MongoDB used for ?
 
 MongoDB is used for various purposes due to its flexible and scalable nature. Common use cases include:
 
@@ -69,7 +69,7 @@ MongoDB is used for various purposes due to its flexible and scalable nature. Co
 8. **Geospatial Data**: Handles location-based data and queries, such as mapping and location-based services.
 
 
-## What are the advantages of mongoDB ?
+## Q-5 What are the advantages of mongoDB ?
 
 MongoDB offers several advantages:
 
@@ -85,11 +85,11 @@ MongoDB offers several advantages:
 
 6. **Ease of Use**: MongoDB’s query language is intuitive and its integration with various programming languages and frameworks is straightforward.
 
-## What is the main feature of MongoDB ?
+## Q-6 What is the main feature of MongoDB ?
 
 The main feature of MongoDB is its **document-oriented storage model**. It stores data in JSON-like documents (BSON format), which allows for a flexible and dynamic schema. This means you can have different fields and data types within the same collection, making it easier to handle diverse and evolving data structures.
 
-## What is MongoDB Query API ?
+## Q-7 What is MongoDB Query API ?
 
 MongoDB Query API is a set of functions and methods provided by MongoDB to interact with your MongoDB database. It allows you to perform operations like querying, inserting, updating, and deleting documents in a MongoDB database.
 
@@ -130,7 +130,7 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 });
 ```
 
-## How to handle dynamic response in mongoDB ?
+## Q-8How to handle dynamic response in mongoDB ?
 
 Handling dynamic responses in MongoDB involves managing data that may vary in structure or content. MongoDB's flexible schema allows you to store documents with different fields in the same collection, which makes it ideal for dynamic data. Here's how you can handle dynamic responses conceptually:
 
@@ -156,7 +156,7 @@ Handling dynamic responses in MongoDB involves managing data that may vary in st
    - When working with dynamic responses, it's important to process and validate the data before storing it in MongoDB. This ensures that the data is in a consistent state and that any necessary transformations (like data type conversions) are handled appropriately.
 
 
-## Introduction of Async, Await try and catch Async, Await in mongoDB ?
+## Q-9 Introduction of Async, Await try and catch Async, Await in mongoDB ?
 
 In MongoDB, when interacting with databases, especially in Node.js, operations like querying, inserting, updating, or deleting data are often asynchronous. This means they don't execute instantly and can take time to complete, especially if the database is large or the network is slow.
 
@@ -171,7 +171,7 @@ In MongoDB, when interacting with databases, especially in Node.js, operations l
 Using `try/catch`, you can catch these errors and handle them appropriately, whether by logging the error, retrying the operation, or sending a response back to the client in a web application.
 
 
-## Setting up Directory Structure of Express MVC Setup Express Routers ?
+## Q-10 Setting up Directory Structure of Express MVC Setup Express Routers ?
 
 Setting up a directory structure for an Express application using the MVC (Model-View-Controller) pattern involves organizing your code into separate folders for models, views, and controllers, along with other supporting directories like routes, config, and public. Here's how you can set it up:
 
@@ -317,7 +317,7 @@ module.exports = User;
 
 This setup provides a basic structure to start building your Express application using the MVC pattern.
 
-## Middleware concept in MVC make static files assests attach internal and external filels ?
+## Q-11 Middleware concept in MVC make static files assests attach internal and external filels ?
 
 ### Middleware Concept in MVC:
 - **Middleware** acts as a bridge between the request and the response in an application. It processes incoming requests before they reach the controller and can also handle responses before they are sent back to the client.
@@ -331,7 +331,7 @@ This setup provides a basic structure to start building your Express application
 - **Internal Files**: These are static assets or resources stored within the application's directory structure (e.g., in a `public` or `assets` folder).
 - **External Files**: These could be files hosted on external servers or CDNs. Middleware can be configured to fetch these files and serve them to the client.
 
-## What is the difference between MongoDB and MySQL ?
+## Q-12 What is the difference between MongoDB and MySQL ?
 
 MongoDB and MySQL are both popular databases but differ significantly in their structure and use cases:
 
@@ -351,7 +351,7 @@ MongoDB and MySQL are both popular databases but differ significantly in their s
    - **MongoDB**: Ideal for applications that require flexible, evolving data structures, such as real-time analytics, content management, and IoT.
    - **MySQL**: Best suited for applications that require complex transactions and data integrity, such as e-commerce platforms, financial systems, and legacy applications.
   
-## What is SQL and NoSQL in MongoDB ?
+## Q-13 What is SQL and NoSQL in MongoDB ?
 
 SQL and NoSQL are two types of database management systems, each with its own approach to handling and storing data. Here's a brief overview of both:
 
@@ -375,7 +375,7 @@ SQL and NoSQL are two types of database management systems, each with its own ap
 - **Query Language**: MongoDB uses a query language that is similar to JSON syntax for querying and manipulating data.
 - **Scalability**: MongoDB is designed to scale horizontally, making it suitable for handling large amounts of data and high-throughput applications.
 
-## What is DBMS in MongoDB ?
+## Q-14 What is DBMS in MongoDB ?
 
 DBMS stands for Database Management System, which is software designed to manage, store, and retrieve data in a database. MongoDB is a type of NoSQL DBMS, and it handles data differently compared to traditional relational databases.
 
@@ -395,7 +395,7 @@ DBMS stands for Database Management System, which is software designed to manage
 
 7. **Integration and Tools**: MongoDB provides various tools and integrations for data management, including MongoDB Atlas (a cloud-based managed service), Compass (a graphical user interface), and drivers for different programming languages.
 
-## Queries and Params in MongoDB ?
+## Q-15 Queries and Params in MongoDB ?
 
 In MongoDB, queries and parameters are used to retrieve and manipulate data stored in the database. Here's a breakdown of how they work:
 
@@ -486,7 +486,7 @@ db.collection.aggregate([
   db.collection.find().skip(10);
   ```
 
-## What is the difference between Mongoose and MongoDB ?
+## Q-16 What is the difference between Mongoose and MongoDB ?
 
 Mongoose and MongoDB serve different purposes in the context of working with MongoDB databases. Here's a breakdown of their differences:
 
@@ -540,7 +540,7 @@ Mongoose and MongoDB serve different purposes in the context of working with Mon
   const User = mongoose.model('User', userSchema);
   ```
 
-## Q-1 Consider you are working in amazon one day your manager asked you to build a feature that can actually see the activity of the whole day that at vwhat API endpoint requests has been made along with the timestamp of request then how are you going to implement it ?
+## Q-17 Consider you are working in amazon one day your manager asked you to build a feature that can actually see the activity of the whole day that at vwhat API endpoint requests has been made along with the timestamp of request then how are you going to implement it ?
 
 To build a feature that tracks API endpoint requests along with their timestamps, we can create a Node.js project using Express.js. Here's a step-by-step guide to implementing this feature:
 
