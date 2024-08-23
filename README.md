@@ -30,6 +30,32 @@ MongoDB is a popular NoSQL database that stores data in a flexible, JSON-like fo
 - **Ease of Use**: JSON-like format is intuitive and easy to work with, especially in modern web applications.
 - **Rich Query Language**: Supports complex queries and aggregations, making it versatile for various use cases.
 
+## Simple MongoDB Example ##
+```javascript
+db.students.insertMany([
+  { id: 1, name: 'Ryan', gender: 'M' },
+  { id: 2, name: 'Joanna', gender: 'F' },
+  { id: 3, name: 'Jhon', gender: 'M' },
+  { id: 4, name: 'Alex', gender: 'M' },
+  { id: 5, name: 'Bru', gender: 'F' },
+  { id: 6, name: 'Jack', gender: 'M'},
+  { id: 7, name: 'Thomas', gender: 'M' },
+  { id: 8, name: 'Noah', gender: 'F' },
+  { id: 9, name: 'Leo', gender: 'M' },
+  { id: 10, name: 'Harry', gender: 'M' },
+  { id: 11, name: 'Oliver', gender: 'F' },
+  { id: 12, name: 'William', gender: 'F' },
+  { id: 13, name: 'Adam', gender: 'M' },
+  { id: 14, name: 'Sophia', gender: 'F' }
+    
+]);
+db.students.find({ gender: 'F' });
+
+db.students.find({ gender: 'M' });
+
+
+```
+
 ## Q-3 What are the benefits of it ?
 
 MongoDB offers several benefits:
